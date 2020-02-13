@@ -8,13 +8,6 @@ import java.net.URL;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ReadFileService {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<>();
-        new ReadFileService().readFileAndPutInQueue("file.txt", queue);
-        System.out.println(queue.size());
-        queue.stream().forEach(System.out::println);
-
-    }
 
     public LinkedBlockingQueue readFileAndPutInQueue(String fileName, LinkedBlockingQueue<String> queue) throws IOException, InterruptedException {
         ClassLoader classLoader = getClass().getClassLoader();
