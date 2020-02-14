@@ -17,5 +17,8 @@ public class Main {
         for (int i = 0; i < queue.size(); i++) {
             e.execute(new Producer(queue, map));
         }
+        Thread.currentThread().join();
+        System.out.println(map.size());
+
     }
 }

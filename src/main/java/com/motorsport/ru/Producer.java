@@ -16,7 +16,7 @@ public class Producer implements Runnable {
     @Override
     public void run() {
         try {
-            serviceClassification.classification(map, queue.peek());
+            serviceClassification.classification(map, queue.take());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
