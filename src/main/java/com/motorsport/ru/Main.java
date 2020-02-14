@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         ReadFileService readFileService = new ReadFileService();
         LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<>();
-        readFileService.readFileAndPutInQueue("file.txt", queue);
+        readFileService.readFileAndPutInQueue(queue);
         ConcurrentHashMap<String, LinkedBlockingQueue<String>> map = new ConcurrentHashMap<>();
 
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());

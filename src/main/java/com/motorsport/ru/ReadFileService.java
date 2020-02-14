@@ -9,9 +9,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ReadFileService {
 
-    public LinkedBlockingQueue readFileAndPutInQueue(String fileName, LinkedBlockingQueue<String> queue) throws IOException, InterruptedException {
+    void readFileAndPutInQueue(LinkedBlockingQueue<String> queue) throws IOException, InterruptedException {
         ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource(fileName);
+        URL resource = classLoader.getResource("file.txt");
         assert resource != null;
         File file = new File(resource.getFile());
         try (FileReader reader = new FileReader(file);
@@ -21,6 +21,5 @@ public class ReadFileService {
                 queue.put(line);
             }
         }
-        return queue;
     }
 }
