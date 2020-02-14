@@ -1,10 +1,7 @@
 package com.motorsport.ru;
 
 import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -13,12 +10,19 @@ public class Main {
         readFileService.readFileAndPutInQueue("file.txt", queue);
         ConcurrentHashMap<String, LinkedBlockingQueue<String>> map = new ConcurrentHashMap<>();
 
-        ExecutorService e = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         for (int i = 0; i < queue.size(); i++) {
-            e.execute(new Producer(queue, map));
+            executorService.execute(new Producer(queue, map));
         }
-        Thread.currentThread().join();
         System.out.println(map.size());
-
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+        }
+        System.out.println(map.size());
     }
 }
