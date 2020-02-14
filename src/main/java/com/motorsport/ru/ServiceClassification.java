@@ -9,7 +9,7 @@ class ServiceClassification {
     private PunctuationMarksClassifier punctuationMarksClassifier = new PunctuationMarksClassifier();
 
 
-    ConcurrentHashMap<String, LinkedBlockingQueue<String>> classification(ConcurrentHashMap<String, LinkedBlockingQueue<String>> map, String line) throws InterruptedException {
+    void classification(ConcurrentHashMap<String, LinkedBlockingQueue<String>> map, String line) throws InterruptedException {
         if (alphabeticClassifier.classifier(line)) {
             String key = alphabeticClassifier.getClass().getSimpleName();
             putLineToQueue(map, line, key);
@@ -20,7 +20,6 @@ class ServiceClassification {
             String key = punctuationMarksClassifier.getClass().getSimpleName();
             putLineToQueue(map, line, key);
         }
-        return map;
     }
 
     private void putLineToQueue(ConcurrentHashMap<String, LinkedBlockingQueue<String>> map, String line, String key) throws InterruptedException {
